@@ -1,0 +1,58 @@
+1846. Maximum Element After Decreasing and Rearranging
+
+Intuition:
+As we are asked to find maximum element in the array after all the operations
+to make array satisfy the given conditions.
+let us go throught the conditions first
+
+1.The value of the first element in arr must be 1.
+So,regardless of what element is in the 0th index 
+we will change it to 1.
+2.The absolute difference between any 2 adjacent elements 
+must be less than or equal to 1. 
+we will check the difference between arr[i] and arr[i-1] as we know 0th index 
+must be 1 we will start the loop from 1 instead 0 
+
+Operations can be performed:
+* Decrease the value of any element of arr to a smaller positive integer.
+* Rearrange the elements of arr to be in any order.
+
+test case:
+Input: arr = [2,2,1,2,1]
+Output: 2
+Explanation: 
+We can satisfy the conditions by rearranging arr so it becomes [1,2,2,2,1].
+The largest element in arr is 2.
+
+Approach:
+Sorting is required . 
+Sort the array then we can greedly check at each index for the max element
+if the difference between ith element and i-1th element is not less or equal to one
+then we make ith element as i-1th element+1 that arr[i]=arr[i-1]+1;
+which will give us the required difference 
+
+
+Code:
+class Solution {
+    public int maximumElementAfterDecrementingAndRearranging(int[] arr) {
+        int n=arr.length;
+    Arrays.sort(arr);
+    int max=1;
+    if(arr[0]!=1){
+        arr[0]=1;
+    }
+    for(int i=1;i<n;i++){
+        if(arr[i]-arr[i-1]>1){
+            arr[i]=arr[i-1]+1;
+        }
+        max=Math.max(max,arr[i]);
+    }
+    return max;
+
+        
+    }
+   
+}
+
+
+
