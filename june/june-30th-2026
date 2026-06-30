@@ -1,0 +1,65 @@
+
+1358. Number of Substrings Containing All Three Characters
+
+Given a string s consisting only of characters a, b and c.
+
+Return the number of substrings containing at least one occurrence of all these characters a, b and c.
+
+ 
+
+Example 1:
+
+Input: s = "abcabc"
+Output: 10
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again). 
+
+Approach 1:
+Generate all possible substring and count the string whichsatisfy the given codition 
+this would take O(N^3)
+which is not great for s.length<=10^4
+
+Approach 2:Just iterate over all start and end indices ,this would take O(N^2)
+
+Approach 3: 
+Use two pointers to maintain a window and keep track of the frequency of 'a', 'b', and 'c'.
+Expand the right pointer until the current window contains all three characters.
+Once the window is valid, every substring starting from the current left pointer and ending at the current right pointer or any position after it will also be valid. Therefore, add n - right to the answer.
+Then, shrink the window from the left while it remains valid to count all possible valid starting positions.
+This ensures that every valid substring is counted exactly once.
+
+
+let us traverse the string and also have a map 
+initialise the map with 'a'-0, 'b'-0 ,c-'0'
+put ith character in map 
+while the freqency of each character is greater than 0 
+add count =count+s.length-i
+remove jth character from map
+
+Solution:
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int n=s.length();
+      int c=0;
+      HashMap<Character,Integer> h=new HashMap<>();
+      int p1=0,p2=1;
+      h.put('a',0);
+      h.put('b',0);
+      h.put('c',0);
+      int j=0;
+      for(int i=0;i<n;i++){
+        h.put(s.charAt(i),h.get(s.charAt(i))+1);
+     
+        while(h.get('a')>0&&h.get('b')>0&&h.get('c')>0) {
+            c=c+n-i;
+            h.put(s.charAt(j),h.get(s.charAt(j))-1);
+            j++;
+           
+        }
+
+      }
+      return c;
+ 
+
+
+    }}
+
